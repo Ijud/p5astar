@@ -74,7 +74,7 @@ function setup() {
 	}
 
 	start = grid[0][0]
-	end = grid[cols-1][3]
+	end = grid[cols-1][rows-1]
 
 	openSet.push(start);
 
