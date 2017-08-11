@@ -1,0 +1,11 @@
+{
+  "name": "l2astar",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "harp server --port $PORT"
+  },
+  "dependencies": {
+    "harp": "*"
+  }
+}
