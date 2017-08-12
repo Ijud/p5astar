@@ -7,13 +7,13 @@ function removefromAry(ary,elt) {
 }
 
 function heuristic(a,b) {       
-	//var d = dist(a.i,a.j,b.i,b.j); /// finds distance two points, pythagorean
-	var d = abs(a.i-b.i) + abs(a.j -b.j)
+	var d = dist(a.i,a.j,b.i,b.j); /// finds distance two points, pythagorean
+	//var d = abs(a.i-b.i) + abs(a.j -b.j)
 	return d;
 }
 
-var cols = 25
-var rows = 25
+var cols = 50
+var rows = 50
 var grid = new Array(cols);
 
 var openSet = [];
@@ -22,7 +22,6 @@ var start;
 var end;
 var w, h;
 var path = [];
-var noSolution = false;
 
 function Cell(i,j) {
 	this.i = i;
@@ -53,8 +52,12 @@ function Cell(i,j) {
 
 		if (i < cols - 1) {this.neighbors.push(grid[i+1][j])}
 		if (i > 0) {this.neighbors.push(grid[i-1][j])}
-		if (j < rows - 1){this.neighbors.push(grid[i][j+1])}
-		if(j > 0) {this.neighbors.push(grid[i][j-1])}
+		if (j < rows - 1) {this.neighbors.push(grid[i][j+1])}
+		if (j > 0) {this.neighbors.push(grid[i][j-1])}
+		if (i > 0 && j > 0) {this.neighbors.push(grid[i-1][j-1])}
+		if (i < cols - 1 && j > 0) {this.neighbors.push(grid[i+1][j-1])}
+		if (i > 0 && j < rows - 1) {this.neighbors.push(grid[i-1][j+1])}
+		if (i < cols -1 && j < rows - 1) {this.neighbors.push(grid[i+1][j+1])}
 	}
 }
 
@@ -117,16 +120,23 @@ function draw() {
 			var neighbor = neighbors[i];
 			if (!closedSet.includes(neighbor) && !neighbor.wall) {
 				var tempG = current.g + 1;
+				var newPath = false;
 				if (openSet.includes(neighbor)) {
-					if(tempG < neighbor.g) {neighbor.g = tempG}
+					if(tempG < neighbor.g) {
+						neighbor.g = tempG
+						newPath = true;
+					}
 				}else{
 					neighbor.g = tempG;
+					newPath = true;
 					openSet.push(neighbor);
 				}
+				if (newPath) {
 
 				neighbor.h = heuristic(neighbor,end);
 				neighbor.f = neighbor.g + neighbor.h;
 				neighbor.previous = current;
+				}
 			}
 		}
 
@@ -135,8 +145,8 @@ function draw() {
 		//continue
 	} else {
 		console.log('no solution')
-		noSolution = true
 		noLoop()
+		return;
 	}
 
 	background(0);
@@ -156,7 +166,6 @@ function draw() {
 	}
 
 			//find path
-			if(!noSolution){
 	path = [];
 	var temp = current;
 	path.push(temp)
@@ -164,7 +173,6 @@ function draw() {
 		path.push(temp.previous);
 		temp = temp.previous;
 	}
-}
 	for (var i = 0; i<path.length; i++) {
 		path[i].show(color(0,0,255));
 
