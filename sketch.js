@@ -12,8 +12,8 @@ function heuristic(a,b) {
 	return d;
 }
 
-var cols = 50
-var rows = 50
+var cols = 100
+var rows = 100
 var grid = new Array(cols);
 
 var openSet = [];
