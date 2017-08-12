@@ -31,9 +31,17 @@ function Cell(i,j) {
 	this.h = 0;
 	this.neighbors = [];
 	this.previous = undefined;
+	this.wall = false
+
+	if(random(1) < 0.3) {
+		this.wall = true
+	}
 
 	this.show = function(color) {
 		fill(color)
+		if(this.wall){
+			fill(0);
+		}
 		noStroke()
 		rect(this.i*w, this.j*h, w-1, h-1)
 
@@ -75,6 +83,8 @@ function setup() {
 
 	start = grid[0][0]
 	end = grid[cols-1][rows-1]
+	start.wall = false
+	end.wall = false
 
 	openSet.push(start);
 
@@ -104,7 +114,7 @@ function draw() {
 		var neighbors = current.neighbors;
 		for (var i = 0; i < neighbors.length; i++) {
 			var neighbor = neighbors[i];
-			if (!closedSet.includes(neighbor)) {
+			if (!closedSet.includes(neighbor) && !neighbor.wall) {
 				var tempG = current.g + 1;
 				if (openSet.includes(neighbor)) {
 					if(tempG < neighbor.g) {neighbor.g = tempG}
