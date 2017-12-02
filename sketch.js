@@ -33,7 +33,7 @@ function Cell(i,j) {
 	this.previous = undefined;
 	this.wall = false
 
-	if(random(1) < 0.7) {
+	if(random(1) < 0.35) {
 		this.wall = true
 	}
 
@@ -85,8 +85,8 @@ function setup() {
 		}
 	}
 
-	start = grid[0][0]
-	end = grid[cols-1][rows-1]
+	start = grid[50][0]
+	end = grid[cols-1][50]
 	start.wall = false
 	end.wall = false
 
