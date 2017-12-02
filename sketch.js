@@ -33,7 +33,7 @@ function Cell(i,j) {
 	this.previous = undefined;
 	this.wall = false
 
-	if(random(1) < 0.3) {
+	if(random(1) < 0.7) {
 		this.wall = true
 	}
 
