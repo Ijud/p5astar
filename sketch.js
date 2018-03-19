@@ -85,8 +85,8 @@ function setup() {
 		}
 	}
 
-	start = grid[50][0] //0
-	end = grid[cols-1][50] //rows-1
+	start = grid[0][0] //0
+	end = grid[cols-1][rows-1] //rows-1
 	start.wall = false
 	end.wall = false
 
